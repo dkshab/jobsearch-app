@@ -6,9 +6,9 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
+from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
-from flask_cors import CORS
 
 
 # instantiate the extensions
@@ -17,13 +17,14 @@ toolbar = DebugToolbarExtension()
 migrate = Migrate()
 bcrypt = Bcrypt()
 
+
 def create_app(script_info=None):
 
     # instantiate the app
     app = Flask(__name__)
 
     # enable CORS
-    CORS(app)  # new
+    CORS(app)
 
     # set config
     app_settings = os.getenv('APP_SETTINGS')
@@ -38,6 +39,8 @@ def create_app(script_info=None):
     # register blueprints
     from project.api.users import users_blueprint
     app.register_blueprint(users_blueprint)
+    from project.api.auth import auth_blueprint  # new
+    app.register_blueprint(auth_blueprint)       # new
 
     # shell context for flask cli
     @app.shell_context_processor

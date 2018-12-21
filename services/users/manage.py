@@ -10,7 +10,6 @@ from project import create_app, db
 from project.api.models import User
 
 
-
 COV = coverage.coverage(
     branch=True,
     include='project/*',
@@ -61,8 +60,18 @@ def cov():
 @cli.command()
 def seed_db():
     """Seeds the database."""
-    db.session.add(User(username='michael', email="hermanmu@gmail.com"))
-    db.session.add(User(username='michaelherman', email="michael@mherman.org"))
+    # new
+    db.session.add(User(
+        username='michael',
+        email='michael@reallynotreal.com',
+        password='greaterthaneight'
+    ))
+    # new
+    db.session.add(User(
+        username='michaelherman',
+        email='michael@mherman.org',
+        password='greaterthaneight'
+    ))
     db.session.commit()
 
 
